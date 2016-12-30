@@ -21,6 +21,7 @@ DiginObjStore="$Digin_ObjStore"
 IsLocal="$Is_Local"
 LocalShellPath="$Local_Shell_Path"
 
+#Veriables defined for config.php initialization
 MainDomain="$main_Domain"
 AuthUri="$auth_URI"
 ObjUri="$obj_URI"
