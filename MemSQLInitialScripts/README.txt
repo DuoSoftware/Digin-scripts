@@ -1,0 +1,1 @@
+Execute the memsql script for the inital table and initial data insertions.
