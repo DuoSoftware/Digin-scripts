@@ -1,0 +1,265 @@
+CREATE TABLE `cache_aggregation` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `data` JSON COLLATE utf8_bin,
+  `query` varchar(1023) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `expirydatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createddatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `cache_algorithms` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name_algo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `data` JSON COLLATE utf8_bin,
+  `expirydatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  PRIMARY KEY (`id`,`name_algo`)
+);
+
+CREATE TABLE `cache_descriptive_analytics` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `c_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `data` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `expirydatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createddatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  PRIMARY KEY (`id`,`c_type`)
+);
+
+CREATE TABLE `cache_execute_query` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `data` JSON COLLATE utf8_bin,
+  `query` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `expirydatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createddatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `cache_forecasting` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `data` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `expirydatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createddatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `cache_hierarchy_levels` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `level` int(11) NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `expirydatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createddatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  PRIMARY KEY (`id`,`level`)
+);
+
+CREATE TABLE `cache_hierarchy_summary` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `data` JSON COLLATE utf8_bin,
+  `expirydatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createddatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `digin_component_access_details` (
+  `component_id` decimal(14,0) NOT NULL,
+  `user_id` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `type` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `domain` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `security_level` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `shared_by` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `user_group_id` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  PRIMARY KEY (`component_id`,`user_id`,`type`,`domain`)
+);
+
+CREATE TABLE `digin_component_detail` (
+  `widget_id` decimal(14,0) NOT NULL,
+  `widget_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_data` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `digin_comp_id` decimal(14,0) NOT NULL,
+  `comp_page_id` decimal(14,0) NOT NULL,
+  `version_id` decimal(10,0) DEFAULT NULL,
+  `is_active` tinyint(4) DEFAULT 1,
+  `size_x` int(11) DEFAULT 0,
+  `size_y` int(11) DEFAULT 0,
+  `row` int(11) DEFAULT 0,
+  `col` int(11) DEFAULT 0,
+  PRIMARY KEY (`comp_page_id`,`widget_id`,`digin_comp_id`)
+);
+
+CREATE TABLE `digin_component_header` (
+  `digin_comp_id` decimal(14,0) NOT NULL,
+  `digin_comp_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `refresh_interval` int(11) DEFAULT NULL,
+  `digin_comp_class` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `digin_comp_type` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `digin_comp_category` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `is_active` tinyint(4) DEFAULT 1,
+  `created_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_tenant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `modified_date_time` datetime DEFAULT NULL,
+  `created_date_time` datetime DEFAULT NULL,
+  `last_modified_user` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  PRIMARY KEY (`digin_comp_id`)
+);
+
+CREATE TABLE `digin_component_page_detail` (
+  `page_id` decimal(14,0) NOT NULL,
+  `digin_comp_id` decimal(14,0) NOT NULL,
+  `page_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `page_data` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `is_active` tinyint(4) DEFAULT 1,
+  PRIMARY KEY (`digin_comp_id`,`page_id`)
+);
+
+CREATE TABLE `digin_data_source_config` (
+  `ds_config_id` bigint(50) NOT NULL,
+  `connection_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `connection_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `host_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `database_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `port` bigint(20) DEFAULT NULL,
+  `user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `others` JSON COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`ds_config_id`)
+);
+
+CREATE TABLE `digin_datasource_details` (
+  `id` decimal(14,0) NOT NULL,
+  `project_id` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `dataset_id` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `datasource_id` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `datasource_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `schema` JSON COLLATE utf8_bin,
+  `modified_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_tenant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `is_active` tinyint(4) DEFAULT 1,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `digin_datasource_upload_details` (
+  `upload_id` decimal(14,0) NOT NULL,
+  `datasource_id` decimal(14,0) NOT NULL,
+  `upload_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `uploaded_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `upload_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `file_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `number_of_rows` bigint(20) DEFAULT NULL,
+  `first_row_number` bigint(20) DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`upload_id`)
+);
+
+CREATE TABLE `digin_dialogbox_details` (
+  `widget_id` decimal(14,0) NOT NULL,
+  `menu_id` decimal(14,0) NOT NULL,
+  `dialogbox_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `dialogbox_widget_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `dialogbox_widget_icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_type` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_initTemplate` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_initController` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_widview` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_dataview` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_color` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_sizeX` int(11) DEFAULT NULL,
+  `widget_sizeY` int(11) DEFAULT NULL,
+  `widget_row` int(11) DEFAULT NULL,
+  `widget_col` int(11) DEFAULT NULL,
+  `widget_href` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_datactrl` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `widget_dataJson` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `user_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `domain` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `configuration` JSON COLLATE utf8_bin,
+  PRIMARY KEY (`widget_id`,`menu_id`)
+);
+
+CREATE TABLE `digin_menu_details` (
+  `menu_id` decimal(14,0) NOT NULL,
+  `menu_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `menu_icon2` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  PRIMARY KEY (`menu_id`)
+);
+
+CREATE TABLE `digin_packagedetails` (
+  `package_id` decimal(14,0) NOT NULL,
+  `package_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `package_attribute` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `package_value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `package_price` decimal(10,2) DEFAULT NULL,
+  `is_default` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`package_id`,`package_name`,`package_attribute`)
+);
+
+CREATE TABLE `digin_tenant_package_details` (
+  `tenant_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `package_id` decimal(14,0) NOT NULL,
+  `created_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `expiry_datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `package_status` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `user_status` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT 'active',
+  PRIMARY KEY (`tenant_id`,`package_id`,`created_datetime`)
+);
+
+CREATE TABLE `digin_usage_details` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `tenant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parameter` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `createddatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `other_data` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  UNIQUE KEY `id` (`id`),
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=78374;
+
+CREATE TABLE `digin_usage_summary` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `tenant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parameter` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `modifieddatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createddatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `other_data` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  UNIQUE KEY `id` (`id`,`user_id`,`tenant`,`parameter`),
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=531;
+
+CREATE TABLE `digin_user_details` (
+  `user_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `domain` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`user_id`)
+);
+
+CREATE TABLE `digin_user_settings` (
+  `user_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `email` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `components` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `user_role` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `cache_lifetime` int(11) DEFAULT NULL,
+  `widget_limit` int(11) DEFAULT NULL,
+  `query_limit` int(11) DEFAULT NULL,
+  `logo_path` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `theme_config` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `modified_date_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `created_date_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `domain` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `dp_path` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  PRIMARY KEY (`user_id`,`domain`)
+);
+
+CREATE TABLE `wordcloud` (
+  `d_name` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `DateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `data` JSON COLLATE utf8_bin,
+  PRIMARY KEY (`d_name`)
+);
